@@ -1,20 +1,26 @@
 import codecs
 
 # --------------------------------------------------------
-#           PYTHON PROGRAM
-# Here is where we are going to define our set of...
-# - Imports
-# - Global Variables
-# - Functions
-# ...to achieve the functionality required.
-# When executing > python 'this_file'.py in a terminal,
-# the Python interpreter will load our program,
-# but it will execute nothing yet.
+#           Mine Sweeper program
 # --------------------------------------------------------
-
-# ------------------------------------------
-# FUNCTION parse_in
-# ------------------------------------------
+# Input The first line contains two integers N and M, 1 ≤ N, M ≤ 1000,
+# corresponding to the the height and width of the map respectively.
+# The next N lines contain M space-separated characters.
+# Each character is either an x if this cell contains a mine,
+# or o to represent an empty cell.
+#
+# Output The output consists of N lines of M space-separated characters. Each
+# character either encodes for the number of adjacent cells containing mines,
+# or the character ’x’ if the cell itself contains a mine.
+#
+# EX:
+# Sample Input 1     Sample Output 1
+# 3 5                   1 x 3 x 3
+# o x o x o             1 1 3 x x
+# o o o x x             0 0 1 2 2
+# o o o o o
+#
+# --------------------------------------------------------
 
 
 def parse_in(file_name):
@@ -121,7 +127,7 @@ def parse_out(output_name, my_solution):
             line = line + str(cell) + " "
 
         size = len(line)
-        if (size > 0):
+        if size > 0:
             line = line[0:(size - 1)]
 
         line = line + "\n"
