@@ -44,38 +44,26 @@ def parse_in(file_name):
 # ------------------------------------------
 def solve(my_data):
     """Searches Matrix for mines around each point in data[map] and changes value to number mines found"""
-    search_area = []
-    # create 8 points around position to be used for searching for mines
-    x, y = 0, 0
-
-
-    # print(f"Points positions:  {points_pos}")
-    # print(f"Top Left:  {points_pos[0]}")
-    y = -1
-    # iterate through each data point in the map
+    y = -1  # initialise column
+    # iterate through each row
     for index, row in enumerate(my_data["Matrix"]):
-        # print(f"index : {index}")
-        # print(f"row : {row}")
+
         y += 1
-        x = 0  # reset y value for each row
+        x = 0  # reset x value for each row
+        # iterate through each column in row
         for val in row:
             if val == 'o':  # check point is not a mine
-
-                # print(f"Value : {val}")
-                # print(f" (x, y )  : ({x}, {y})")
                 search_points = get_search_points(x, y, my_data['NumRows']-1, my_data['NumColumns']-1)
-
                 num_mines = count_mines(x, y, search_points, my_data)
                 val = str(num_mines)
-
                 my_data["Matrix"][y][x] = val
             x += 1  # increment y
-    # print(f"Solved Result: {my_data}")
 
     return my_data
 
 
 def count_mines(x, y, search_points, data):
+    """ Uses the search points to check for mines around a specific (x,y) point"""
 
     # Points_pos :  Top Left  Top Center   Top Right   ->    [0]  [1]  [2]
     #                   Left                 Right     ->    [3]       [4]
@@ -84,24 +72,18 @@ def count_mines(x, y, search_points, data):
                   [x + 1, y + 1]]
     count = 0
     for point in search_points:
-        # print(f" Point Pos {point} : {points_pos[point]} ")
-        # print(f"Search Point X : {points_pos[point][0]}")
-        # print(f"Search Point y : {points_pos[point][1]}")
-        # print(f"Value Found: {data['Matrix'][points_pos[point][1]][points_pos[point][0]]}")
-        if data["Matrix"][points_pos[point][1]][points_pos[point][0]] == 'x':
+        if data["Matrix"][points_pos[point][1]][points_pos[point][0]] == 'x':  # check for mine
             count += 1
-            # print(f"count: {count}")
-    print(f"Num Mines : {count}")
 
     return count
 
 
 def get_search_points(x, y, last_row, last_cols):
-    # print(f"--------------------------------")
-    # print(f" last_row : {last_row}")
-    # print(f" last_cols : {last_cols}")
-    # print(f" Search Points:  (x, y )  : ({x}, {y})")
-
+    """ Uses the search points and size of map to determine location of point determine what
+        points would need to be checked around it when searching for mines in count_mines()
+        Position comes from:  Top Left  Top Center   Top Right   ->    [0]  [1]  [2]
+                                  Left                   Right   ->    [3]       [4]
+                              Btm Left  Btm Center   Btm Right   ->    [5]  [6]  [7]"""
     # Rules: If Corner
     if x == 0 and y == 0:                   # 1 top left
         points = [4, 6, 7]
@@ -131,7 +113,21 @@ def get_search_points(x, y, last_row, last_cols):
 # FUNCTION parse_out
 # ------------------------------------------
 def parse_out(output_name, my_solution):
-    pass
+    my_output_stream = codecs.open(output_name, "w", encoding="utf-8")
+    for cell_row in my_solution["Matrix"]:
+        line = ""
+
+        for cell in cell_row:
+            line = line + str(cell) + " "
+
+        size = len(line)
+        if (size > 0):
+            line = line[0:(size - 1)]
+
+        line = line + "\n"
+
+        my_output_stream.write(line)
+    my_output_stream.close()
 
 
 # ------------------------------------------
@@ -144,10 +140,10 @@ def my_main(input_name, output_name):
 
     # 2. We do the strategy to solve the problem
     my_solution = solve(my_data)
-    print(f"My solution: {my_solution}")
+    print(f"Sol:  {my_solution}")
 
     # 3. We do the parse out to the output file
-   #parse_out(output_name, my_solution)
+    parse_out(output_name, my_solution)
 
 
 # ---------------------------------------------------------------
@@ -159,7 +155,7 @@ def my_main(input_name, output_name):
 # ---------------------------------------------------------------
 if __name__ == '__main__':
     # 1. Name of input and output files
-    input_name = "input_1.txt"
+    input_name = "input_3.txt"
     output_name = "output.txt"
 
     # 2. Main function
