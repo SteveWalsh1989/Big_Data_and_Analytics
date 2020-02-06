@@ -93,12 +93,12 @@ def count_mines(x, y, search_points, data):
 
     #     print(f"Search Point : {points_pos[point]}")
     #
-    #     print(f"Search Point X : {points_pos[point][0]}")
-    #     print(f"Search Point y : {points_pos[point][1]}")
-    #     print(f"Value Found: {data['Matrix'][points_pos[point][0]][points_pos[point][1]]}")
-    #     if data["Matrix"][points_pos[point][0]][points_pos[point][1]] == 'x':
-    #         count += 1
-    #         # print(f"count: {count}")
+        print(f"Search Point X : {points_pos[point][0]}")
+        print(f"Search Point y : {points_pos[point][1]}")
+        print(f"Value Found: {data['Matrix'][points_pos[point][1]][points_pos[point][0]]}")
+        if data["Matrix"][points_pos[point][1]][points_pos[point][0]] == 'x':
+            count += 1
+            # print(f"count: {count}")
     print(f"Num Mines : {count}")
 
     return count
