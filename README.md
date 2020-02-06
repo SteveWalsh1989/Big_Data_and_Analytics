@@ -15,9 +15,13 @@ character either encodes for the number of adjacent cells containing mines,
 or the character ’x’ if the cell itself contains a mine.
 
 ## EX:
-Sample Input 1     Sample Output 1
-3 5                   1 x 3 x 3
-o x o x o             1 1 3 x x
-o o o x x             0 0 1 2 2
-o o o o o
+Sample Input 1:   
+3 5                 
+o x o x o              
+o o o x x             
+o o o o o  
 
+Sample Output 1:  
+1 x 3 x 3  
+1 1 3 x x    
+0 0 1 2 2 . 
