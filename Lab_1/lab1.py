@@ -1,3 +1,5 @@
+from builtins import str, len
+
 import codecs
 
 # --------------------------------------------------------
