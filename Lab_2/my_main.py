@@ -25,13 +25,13 @@ def get_report_name(population_size, num_movies, use_fast_algorithm, num_cores):
     res = ""
 
     # 2. We get the sequential or parallel flavour
-    if (num_cores == 1):
+    if num_cores == 1:
         res = res + "Sequential_"
     else:
         res = res + "Parallel-" + str(num_cores) + "-Cores_"
 
     # 3. We get the type of algorithm
-    if (use_fast_algorithm == True):
+    if use_fast_algorithm:
         res = res + "Algorithm-nlogn_"
     else:
         res = res + "Algorithm-n2_"
@@ -75,7 +75,7 @@ def write_report(output_file_name, population_results, total_time, time_per_core
 # ------------------------------------------
 def my_main(new_benchmark, population_size, num_movies, use_fast_algorithm, num_cores):
     # 1. If a new benchmark is required we generate it
-    if new_benchmark == True:
+    if new_benchmark:
         create_benchmark.generate_benchmark("./input_files/", population_size, num_movies)
 
     # 2. We get the name of the result file

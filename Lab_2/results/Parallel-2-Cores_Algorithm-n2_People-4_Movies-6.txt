@@ -1,0 +1,17 @@
+
+--------------------
+ FILE RESULTS
+--------------------
+./input_files/file_1.txt --> 3.123283386230469e-05 seconds, 8 inversions
+./input_files/file_2.txt --> 1.0967254638671875e-05 seconds, 11 inversions
+./input_files/file_3.txt --> 2.3126602172851562e-05 seconds, 9 inversions
+./input_files/file_4.txt --> 5.9604644775390625e-06 seconds, 8 inversions
+
+--------------------
+ TIMES
+--------------------
+TOTAL TIME = 7.128715515136719e-05 seconds
+
+CONCURRENCY TIME = 4.220008850097656e-05 seconds
+Time Core 0 = 4.220008850097656e-05 seconds
+Time Core 1 = 2.9087066650390625e-05 seconds

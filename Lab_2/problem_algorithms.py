@@ -19,6 +19,7 @@
 #
 # ------------------------------------------------
 
+
 # ------------------------------------------
 # FUNCTION count_inversions_n2
 # ------------------------------------------
@@ -38,6 +39,7 @@ def count_inversions_n2(my_rank_list):
 
     # 4. We return res
     return res
+
 
 # ------------------------------------------------
 #
@@ -79,7 +81,7 @@ def merge_count_inversions(l1, l2):
         # 3.1. Case where both l1 and l2 have elements
         if (size_l1 > 0) and (size_l2 > 0):
             # 3.1.1. If the first element is the smallest
-            if (l1[i] <= l2[j]):
+            if l1[i] <= l2[j]:
                 # I. We add it to the list
                 sort_list.append(l1[i])
                 # II. We get one element less in the first list
@@ -101,7 +103,7 @@ def merge_count_inversions(l1, l2):
         # 3.2. Case where one of the lists is empty
         else:
             # 3.2.1. When l1 is non-empty
-            if (size_l1 > 0):
+            if size_l1 > 0:
                 # I. We concatenate the result with the rest of the list
                 sort_list = sort_list + l1[i:]
 
@@ -122,6 +124,7 @@ def merge_count_inversions(l1, l2):
     # 5. We return res
     return res
 
+
 # ------------------------------------------
 # FUNCTION mergesort_and_count_inversions
 # ------------------------------------------
@@ -139,7 +142,7 @@ def mergesort_and_count_inversions(l):
     length = len(l)
 
     # 3. If the list is empty or contains just one item
-    if (length <= 1):
+    if length <= 1:
         # 3.1. We get a fresh (deep) copy of the list
         sort_list = l[:]
 
@@ -170,6 +173,7 @@ def mergesort_and_count_inversions(l):
 
     # 6. We return res
     return res
+
 
 # ------------------------------------------
 # FUNCTION count_inversions_nlogn
