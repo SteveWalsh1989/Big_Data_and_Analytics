@@ -93,22 +93,22 @@ def get_search_points(x, y, last_row, last_cols):
                                   Left                   Right   ->    [3]       [4]
                               Btm Left  Btm Center   Btm Right   ->    [5]  [6]  [7]"""
     # Rules: If Corner
-    if x == 0 and y == 0:                   # 1 top left
+    if x == 0 and y == 0:                              # 1 top left
         points = [4, 6, 7]
-    elif x == 0 and y == last_cols:         # 2 btm left
+    elif x == 0 and y == last_cols:                    # 2 btm left
         points = [1, 2, 4]
-    elif x == last_row and y == 0:          # 3 top right
+    elif x == last_row and y == 0:                     # 3 top right
         points = [3, 5, 6]
-    elif x == last_row and y == last_cols:  # 4 btm right
+    elif x == last_row and y == last_cols:             # 4 btm right
         points = [0, 1, 3]
     # Rule: Sides
-    elif x == 0 and y != 0 and y != last_cols:         # 5 left
+    elif x == 0 and y != 0 and y != last_cols:         # 5 left side
         points = [1, 2, 4, 6, 7]
-    elif y != 0 and y != last_cols and x == last_row:  # 6 right
+    elif y != 0 and y != last_cols and x == last_row:  # 6 right side
         points = [0, 1, 3, 5, 6]
-    elif x != 0 and y == 0 and x != last_row:          # 7 top
+    elif x != 0 and y == 0 and x != last_row:          # 7 top row
         points = [3, 4, 5, 6, 7]
-    elif x != 0 and x != last_row and y == last_cols:  # 8 bottom
+    elif x != 0 and x != last_row and y == last_cols:  # 8 bottom row
         points = [0, 1, 2, 3, 4]
     # Rule: 9 Else - search all position
     else:

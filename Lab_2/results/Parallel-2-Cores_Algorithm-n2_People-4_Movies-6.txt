@@ -2,16 +2,16 @@
 --------------------
  FILE RESULTS
 --------------------
-./input_files/file_1.txt --> 3.123283386230469e-05 seconds, 8 inversions
-./input_files/file_2.txt --> 1.0967254638671875e-05 seconds, 11 inversions
-./input_files/file_3.txt --> 2.3126602172851562e-05 seconds, 9 inversions
-./input_files/file_4.txt --> 5.9604644775390625e-06 seconds, 8 inversions
+./input_files/file_1.txt --> 2.002716064453125e-05 seconds, 8 inversions
+./input_files/file_2.txt --> 7.152557373046875e-06 seconds, 4 inversions
+./input_files/file_3.txt --> 1.8835067749023438e-05 seconds, 9 inversions
+./input_files/file_4.txt --> 6.9141387939453125e-06 seconds, 7 inversions
 
 --------------------
  TIMES
 --------------------
-TOTAL TIME = 7.128715515136719e-05 seconds
+TOTAL TIME = 5.2928924560546875e-05 seconds
 
-CONCURRENCY TIME = 4.220008850097656e-05 seconds
-Time Core 0 = 4.220008850097656e-05 seconds
-Time Core 1 = 2.9087066650390625e-05 seconds
+CONCURRENCY TIME = 2.7179718017578125e-05 seconds
+Time Core 0 = 2.7179718017578125e-05 seconds
+Time Core 1 = 2.574920654296875e-05 seconds

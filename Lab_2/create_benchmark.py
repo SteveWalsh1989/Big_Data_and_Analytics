@@ -51,7 +51,7 @@ def generate_file(num_movies, file_name):
 def generate_benchmark(directory_name, num_people, num_movies):
     # 1. If the directory already contained some files, we remove them
     if os.path.exists(directory_name):
-        #os.remove(directory_name)
+        # os.remove(directory_name)
         shutil.rmtree(directory_name)
         os.mkdir(directory_name)
 

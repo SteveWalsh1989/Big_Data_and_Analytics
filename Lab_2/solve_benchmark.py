@@ -18,6 +18,7 @@ import math
 import multiprocessing
 import problem_algorithms
 
+
 # ------------------------------------------
 # FUNCTION run_file
 # ------------------------------------------
@@ -48,7 +49,7 @@ def run_file(file_name, use_fast_algorithm):
     start_time = time.time()
 
     # 3.2. We solve the problem using the desired algorithm
-    if (use_fast_algorithm == True):
+    if use_fast_algorithm:
         num_inv = problem_algorithms.count_inversions_nlogn(movie_preferences)
     else:
         num_inv = problem_algorithms.count_inversions_n2(movie_preferences)
@@ -61,6 +62,7 @@ def run_file(file_name, use_fast_algorithm):
 
     # 5. We return res
     return res
+
 
 # --------------------------------------------------
 # my_divide_stage
@@ -78,7 +80,7 @@ def my_divide_stage(population_files, num_cores, use_fast_algorithm):
     # 4. We assign res
 
     # Divide Policy 1
-    res = [ (population_files[slice_lb:(slice_lb + sub_size)], use_fast_algorithm) for slice_lb in range(0, size, sub_size)]
+    res = [(population_files[slice_lb:(slice_lb + sub_size)], use_fast_algorithm) for slice_lb in range(0, size, sub_size)]
 
     # Divide Policy 2
     # res = [ [] for index in range(num_cores) ]
@@ -92,9 +94,10 @@ def my_divide_stage(population_files, num_cores, use_fast_algorithm):
     # 5. We return res
     return res
 
-#--------------------------------------------------
+
+# --------------------------------------------------
 # FUNCTION core_workload
-#--------------------------------------------------
+# --------------------------------------------------
 def core_workload(slice):
     # 1. We create the output variable
     res = []
@@ -104,14 +107,15 @@ def core_workload(slice):
     use_fast_algorithm = slice[1]
 
     # 3. We assign res
-    res = [ run_file(person, use_fast_algorithm) for person in population ]
+    res = [run_file(person, use_fast_algorithm) for person in population]
 
     # 4. We return res
     return res
 
-#--------------------------------------------------
+
+# --------------------------------------------------
 # FUNCTION my_map_stage
-#--------------------------------------------------
+# --------------------------------------------------
 def my_map_stage(population_slices):
     # 1. We create the output variable
     res = []
@@ -120,23 +124,24 @@ def my_map_stage(population_slices):
     pool = multiprocessing.Pool()
 
     # 3. We use pool to trigger the parallel execution of each people subset (slice) in a different process
-    res = pool.map( core_workload, population_slices )
+    res = pool.map(core_workload, population_slices)
 
     # 4. We return res
     return res
 
-#--------------------------------------------------
+
+# --------------------------------------------------
 # FUNCTION my_reduce_stage
-#--------------------------------------------------
+# --------------------------------------------------
 def my_reduce_stage(population_slices_results):
     # 1. We create the output variable
     res = ()
 
     # 1.1. We output the inversions and elapsed time per person in the population
-    population_results = [ person for slice in population_slices_results for person in slice ]
+    population_results = [person for slice in population_slices_results for person in slice]
 
     # 1.2. Additionally, we output as well the total working time per core (which is relevant to our analysis)
-    time_per_core = [ sum(person[1] for person in slice) for slice in population_slices_results ]
+    time_per_core = [sum(person[1] for person in slice) for slice in population_slices_results]
 
     # 1.3. Additionally, we output the total time spent by all cores all together
     total_time = sum(time_per_core)
@@ -146,6 +151,7 @@ def my_reduce_stage(population_slices_results):
 
     # 3. We return res
     return res
+
 
 # ------------------------------------------
 # FUNCTION run_benchmark
@@ -164,19 +170,19 @@ def run_benchmark(input_files_dir, use_fast_algorithm, num_cores):
     time_per_core = []
 
     # 2. We get the list of files from input_files in lexicographic order
-    population_files = [ input_files_dir + file_name for file_name in os.listdir(input_files_dir) ]
+    population_files = [input_files_dir + file_name for file_name in os.listdir(input_files_dir)]
     population_files.sort()
 
     # 3. If we follow sequential mode...
-    if (num_cores == 1):
+    if num_cores == 1:
         # 3.1. We solve all the person files for the population, one after another
-        population_results = [ run_file(person, use_fast_algorithm)  for person in population_files ]
+        population_results = [run_file(person, use_fast_algorithm) for person in population_files]
 
         # 3.2. We compute the total time
         total_time = sum(person_results[1] for person_results in population_results)
 
         # 3.3. As all the workload has been done by a single core, we assign the total time to it
-        time_per_core = [ total_time ]
+        time_per_core = [total_time]
 
     # 4. If we follow parallel mode...
     else:

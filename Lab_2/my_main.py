@@ -120,11 +120,11 @@ if __name__ == '__main__':
 
     # 1.2. If we call the program from PyCharm then we hardcode the arguments to the values we want
     else:
-        new_benchmark = True
+        new_benchmark = False
         population_size = 4
         num_movies = 6
-        use_fast_algorithm = False
-        num_cores = 2
+        use_fast_algorithm = True  # n^2 for iterative vs n(log(n)) for distributed
+        num_cores = 2              # sequential <= 1 < parallel
 
     # 2. We call to my_main
     my_main(new_benchmark, population_size, num_movies, use_fast_algorithm, num_cores)
