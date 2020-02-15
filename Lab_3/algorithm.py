@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 import multiprocessing
 
@@ -7,11 +9,16 @@ import multiprocessing
 # ------------------------------------------
 def solve(my_data, num_cores):
     """Searches Matrix for mines around each point in data[map] and changes value to number mines found"""
+    print(f"\nSolving")
+    print(f"Number cores: {num_cores}")
+    print(f"Number rows: {my_data['NumColumns']}")
+    print(f"Number cols: {my_data['NumRows']}")
+
     y = -1  # initialise column
     solution = {}
+    start_time = time.time()
     # iterate through each row
     if num_cores == 1:    # Run sequentially
-
         # we loop over every point in the data matrix
         for index, row in enumerate(my_data["Matrix"]):
             # print(f"Number cores: {num_cores}")
@@ -20,28 +27,18 @@ def solve(my_data, num_cores):
             # iterate through each column in row
             for val in row:
                 if val == 'o':  # check point is not a mine
-
-                    # get list of points to search for bomb around (x,y) from row and column
-                    search_points = get_search_points(x, y, my_data['NumRows']-1, my_data['NumColumns']-1)
-
-                    # get the number of mine per search point using the list of search points
-                    num_mines = count_mines(x, y, search_points, my_data)
-                    val = str(num_mines)
-                    # reset
-                    my_data["Matrix"][y][x] = val
+                    my_data["Matrix"][y][x] = find_bombs(x, y, my_data)
                 x += 1  # increment y
+        # build solution object
         solution["NumRows"] = my_data['NumRows']
-        row_index = 0
-        while row_index < my_data['NumRows']:
+        for row_index in range(0, my_data['NumRows']):
+            # add rows from result matrix to solution
             solution[row_index] = my_data["Matrix"][row_index]
-            row_index += 1
-
     else:  # Run in parallel using number of cores requested
         num_rows = 0
         # Get number of rows
         for index, _ in enumerate(my_data["Matrix"]):
             num_rows += 1
-        print(f"Number cores: {num_cores}")
         if num_rows % num_cores != 0:  # only works if rows can be divided nicely by cores for simplicity
             print(f"Invalid Core Count provided:")
             exit()
@@ -54,6 +51,9 @@ def solve(my_data, num_cores):
 
         # Stage 3: reduce - combine results into final solution set
         solution = my_reduce_stage(res)
+
+    elapsed_time = time.time() - start_time
+    print(f"Time Taken: {elapsed_time}")
 
     return solution
 
@@ -116,6 +116,7 @@ def my_reduce_stage(results_slice):
             # 4. Add data found in Matrix at array index to results
             res[index] = chunk["Matrix"][index]
     # print(f"testing numrows-- {res['NumRows']}")
+
     return res
 
 
@@ -125,31 +126,23 @@ def core_workload(my_data_slice):
     index_list = my_data_slice.start
     my_data = my_data_slice.stop
     my_data["index_list"] = index_list
-
-    # printing core name
-    core =""
-    if 0 in index_list:
-        core = "Core 1: "
-    else:
-        core = "Core 2: "
-    # print(f"{core}index_list: {index_list}")
-    # print(f"{core}my_data: {my_data}")
-
     for index, row in enumerate(index_list):
         y = row
         x = 0  # reset x value for each row
         # iterate through each column in row
         for val in my_data['Matrix'][row]:
             if val == 'o':  # check point is not a mine
-                # print(f"{core} (x, y): {x}, {y}")
-                search_points = get_search_points(x, y, my_data['NumRows'] - 1, my_data['NumColumns'] - 1)
-                num_mines = count_mines(x, y, search_points, my_data)
-                val = str(num_mines)
-                my_data["Matrix"][y][x] = val
+                my_data["Matrix"][y][x] = find_bombs(x, y, my_data)
             x += 1  # increment
-
-    # print(f"\n{core}Result data: {my_data}")
     return my_data
+
+
+def find_bombs(x, y, my_data):
+    """ returns number of bombs around a search point"""
+    search_points = get_search_points(x, y, my_data['NumRows'] - 1, my_data['NumColumns'] - 1)
+    num_mines = count_mines(x, y, search_points, my_data)
+    val = str(num_mines)
+    return val
 
 
 def count_mines(x, y, search_points, data):

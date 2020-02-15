@@ -2,7 +2,7 @@ from builtins import str, len
 
 import codecs
 import algorithm
-
+import numpy as np
 # --------------------------------------------------------
 #           Mine Sweeper program - Big data style
 # --------------------------------------------------------
@@ -30,15 +30,44 @@ import algorithm
 # --------------------------------------------------------
 
 
+def generate_file(name, num_rows, num_cols):
+    print(f"Generating Data ...")
+    print(f"Rows Requested: {num_rows}")
+    print(f"Cols Requested: {num_cols}")
+
+    output_name = "input_files/input_" + str(name) + ".txt"
+    my_output_stream = codecs.open(output_name, "w", encoding="utf-8")
+    header = str(num_rows) + " " + str(num_cols) + "\n"
+    my_output_stream.write(header)
+    for i in range(0, num_rows):
+        map_row = generate_random_row(num_cols)
+        my_output_stream.write(map_row)
+    my_output_stream.close()
+    print(f"Generating Data Complete")
+
+    return name
+
+
+def generate_random_row(num_cols):
+    res = ""
+    for i in range(0, num_cols):
+        test = np.random.choice(np.arange(0, 2), p=[0.23, 0.77])
+        if test == 0:
+            letter = "x "
+        else:
+            letter = "o "
+        res += letter
+    res += "\n"  # add new line
+    return res
+
+
 def parse_in(file_name):
     """Open and read data from file-name and store data in map."""
 
     result = {}
     input_stream = open(file_name).readline()
     result["NumColumns"], result["NumRows"] = map(int, input_stream.strip().split())
-
     input_stream = open(file_name).readlines()
-
     result["Matrix"] = []
 
     for line in input_stream:
@@ -79,11 +108,11 @@ def parse_out(output_name, my_solution):
 def my_main(input_name, output_name, num_cores):
     # 1. We do the parseIn from the input file
     my_data = parse_in(input_name)
-    print(f"Data: {my_data}")
+    # print(f"Data: {my_data}")
 
     # 2. We do the strategy to solve the problem
     my_solution = algorithm.solve(my_data, num_cores)
-    print(f"Sol:  {my_solution}")
+    # print(f"Sol:  {my_solution}")
 
     # 3. We do the parse out to the output file
     parse_out(output_name, my_solution)
@@ -98,12 +127,16 @@ def my_main(input_name, output_name, num_cores):
 # ---------------------------------------------------------------
 if __name__ == '__main__':
     # 1. Name of input and output files
+    cores = [1, 2, 4, 8]
 
-    file_num = 3     # number of file to test
-    core_count = 1   # number of cores to use
+    file_num = 3  # number of file to test
+
+    # generates a file with inputname, numRows, numColumn
+    file_num = generate_file(4, 1000, 1000)
 
     input_name = "input_files/input_" + str(file_num) + ".txt"
     output_name = "results/output_" + str(file_num) + ".txt"
 
-    # 2. Main function
-    my_main(input_name, output_name,core_count )
+    for num_cores in cores:
+        # 2. Main function
+        my_main(input_name, output_name, num_cores)
