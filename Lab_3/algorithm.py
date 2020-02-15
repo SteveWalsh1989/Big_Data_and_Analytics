@@ -9,7 +9,6 @@ def solve(my_data, num_cores):
     """Searches Matrix for mines around each point in data[map] and changes value to number mines found"""
     y = -1  # initialise column
     # iterate through each row
-
     if num_cores == 1:    # Run sequentially
         for index, row in enumerate(my_data["Matrix"]):
             # print(f"Number cores: {num_cores}")
@@ -28,10 +27,8 @@ def solve(my_data, num_cores):
         # Get number of rows
         for index, _ in enumerate(my_data["Matrix"]):
             num_rows += 1
-
         print(f"Number cores: {num_cores}")
-        print(f"Number rows: {num_rows}")
-        if num_rows % num_cores != 0:
+        if num_rows % num_cores != 0:  # only works if rows can be divided nicely by cores for simplicity
             print(f"Invalid Core Count provided:")
             exit()
 
@@ -69,6 +66,10 @@ def my_divide_stage(data, num_cores, num_rows):
 # my_map_stage
 # --------------------------------------------------
 def my_map_stage(data_slice):
+    """ my_map_stage - opens new core pool for each slice object
+    :param data_slice: slice of all data returned from divide
+    :return: results solution of each slice
+    """
     # 1. We create the output variable
     res = []
 
@@ -87,6 +88,8 @@ def my_map_stage(data_slice):
 # my_reduce_stage
 # --------------------------------------------------
 def my_reduce_stage(results_slice):
+    """Combines results into solution list to be printed """
+
     # 1. We create the output variable
     res = {}
     # 2. loop over each chunk in results slice
@@ -100,6 +103,39 @@ def my_reduce_stage(results_slice):
             res[index] = chunk["Matrix"][index]
     # print(f"testing numrows-- {res['NumRows']}")
     return res
+
+
+def core_workload(my_data_slice)
+    """ Core function - takes data slices and locates bombs for each point within rows """
+    # print(f"\n\nmy_data_slice:  {my_data_slice}")
+    index_list = my_data_slice.start
+    my_data = my_data_slice.stop
+    my_data["index_list"] = index_list
+
+    # printing core name
+    core =""
+    if 0 in index_list:
+        core = "Core 1: "
+    else:
+        core = "Core 2: "
+    # print(f"{core}index_list: {index_list}")
+    # print(f"{core}my_data: {my_data}")
+
+    for index, row in enumerate(index_list):
+        y = row
+        x = 0  # reset x value for each row
+        # iterate through each column in row
+        for val in my_data['Matrix'][row]:
+            if val == 'o':  # check point is not a mine
+                # print(f"{core} (x, y): {x}, {y}")
+                search_points = get_search_points(x, y, my_data['NumRows'] - 1, my_data['NumColumns'] - 1)
+                num_mines = count_mines(x, y, search_points, my_data)
+                val = str(num_mines)
+                my_data["Matrix"][y][x] = val
+            x += 1  # increment
+
+    # print(f"\n{core}Result data: {my_data}")
+    return my_data
 
 
 def count_mines(x, y, search_points, data):
@@ -153,34 +189,3 @@ def get_search_points(x, y, last_row, last_cols):
     return points
 
 
-def core_workload(my_data_slice):
-    # print(f"\n\nmy_data_slice:  {my_data_slice}")
-    index_list = my_data_slice.start
-    my_data = my_data_slice.stop
-    my_data["index_list"] = index_list
-    # Testing by printing core name
-    core =""
-    if 0 in index_list:
-        core = "Core 1: "
-    else:
-        core = "Core 2: "
-    # print(f"{core}index_list: {index_list}")
-    # print(f"{core}my_data: {my_data}")
-
-    for index, row in enumerate(index_list):
-        y = row
-        x = 0  # reset x value for each row
-
-        # iterate through each column in row
-        for val in my_data['Matrix'][row]:
-            if val == 'o':  # check point is not a mine
-                # print(f"{core} (x, y): {x}, {y}")
-
-                search_points = get_search_points(x, y, my_data['NumRows'] - 1, my_data['NumColumns'] - 1)
-                num_mines = count_mines(x, y, search_points, my_data)
-                val = str(num_mines)
-                my_data["Matrix"][y][x] = val
-            x += 1  # increment
-
-    # print(f"\n{core}Result data: {my_data}")
-    return my_data
