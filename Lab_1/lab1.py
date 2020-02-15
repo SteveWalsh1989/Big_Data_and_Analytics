@@ -164,7 +164,7 @@ def my_main(input_name, output_name):
 if __name__ == '__main__':
     # 1. Name of input and output files
 
-    file_num = 3
+    file_num = 3  # number of file to test
 
     input_name = "input_files/input_" + str(file_num) + ".txt"
     output_name = "results/output_" + str(file_num) + ".txt"
