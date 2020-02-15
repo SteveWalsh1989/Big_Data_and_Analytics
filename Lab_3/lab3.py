@@ -57,10 +57,10 @@ def parse_in(file_name):
 # ------------------------------------------
 def parse_out(output_name, my_solution):
     my_output_stream = codecs.open(output_name, "w", encoding="utf-8")
-    for cell_row in my_solution["Matrix"]:
+    row = 0
+    while row < my_solution['NumRows']:
         line = ""
-
-        for cell in cell_row:
+        for cell in my_solution[row]:
             line = line + str(cell) + " "
 
         size = len(line)
@@ -68,8 +68,8 @@ def parse_out(output_name, my_solution):
             line = line[0:(size - 1)]
 
         line = line + "\n"
-
         my_output_stream.write(line)
+        row += 1
     my_output_stream.close()
 
 
@@ -99,7 +99,7 @@ def my_main(input_name, output_name, num_cores):
 if __name__ == '__main__':
     # 1. Name of input and output files
 
-    file_num = 2     # number of file to test
+    file_num = 3     # number of file to test
     core_count = 2   # number of cores to use
 
     input_name = "input_files/input_" + str(file_num) + ".txt"

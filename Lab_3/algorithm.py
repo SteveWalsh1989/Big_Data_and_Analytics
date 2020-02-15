@@ -12,7 +12,7 @@ def solve(my_data, num_cores):
 
     if num_cores == 1:    # Run sequentially
         for index, row in enumerate(my_data["Matrix"]):
-            print(f"Number cores: {num_cores}")
+            # print(f"Number cores: {num_cores}")
             y += 1
             x = 0  # reset x value for each row
             # iterate through each column in row
@@ -41,9 +41,10 @@ def solve(my_data, num_cores):
         # Stage 2: Map - We setup the object for enabling parallel computation among the different cores
         res = my_map_stage(rows_slice)
 
-        # Stage 3: reduce -
+        # Stage 3: reduce - combine results into final solution set
+        solution = my_reduce_stage(res)
 
-    return my_data
+    return solution
 
 
 # --------------------------------------------------
@@ -76,6 +77,7 @@ def my_map_stage(data_slice):
 
     # 3. We use pool to trigger the parallel execution of each people subset (slice) in a different process
     res = pool.map(core_workload, data_slice)
+    # print(f"res: {res}")
 
     # 4. We return res
     return res
@@ -84,25 +86,39 @@ def my_map_stage(data_slice):
 # --------------------------------------------------
 # my_reduce_stage
 # --------------------------------------------------
-def my_reduce_stage():
+def my_reduce_stage(results_slice):
+    # 1. We create the output variable
     res = {}
+    # 2. loop over each chunk in results slice
+    for chunk in results_slice:
+        # print(f"chunk-- {chunk}")
 
+        res["NumRows"] = chunk["NumColumns"]  # messed up naming before this
+        # 3. loop over array index list
+        for index in chunk["index_list"]:
+            # 4. Add data found in Matrix at array index to results
+            res[index] = chunk["Matrix"][index]
+    # print(f"testing numrows-- {res['NumRows']}")
     return res
 
 
 def count_mines(x, y, search_points, data):
     """ Uses the search points to check for mines around a specific (x,y) point"""
 
-    # Points_pos :  Top Left  Top Center   Top Right   ->    [0]  [1]  [2]
-    #                   Left                 Right     ->    [3]       [4]
-    #               Btm Left  Btm Center   Btm Right   ->    [5]  [6]  [7]
+    # 1. Points_pos :  Top Left  Top Center   Top Right   ->    [0]  [1]  [2]
+    #                      Left                 Right     ->    [3]       [4]
+    #                  Btm Left  Btm Center   Btm Right   ->    [5]  [6]  [7]
     points_pos = [[x - 1, y - 1], [x, y - 1], [x + 1, y - 1], [x - 1, y], [x + 1, y], [x - 1, y + 1], [x, y + 1],
                   [x + 1, y + 1]]
     count = 0
-    for point in search_points:
-        if data["Matrix"][points_pos[point][1]][points_pos[point][0]] == 'x':  # check for mine
-            count += 1
 
+    # 2. search each point passed in
+    for point in search_points:
+        # 3. check for mine
+        if data["Matrix"][points_pos[point][1]][points_pos[point][0]] == 'x':
+            # 4. increase bomb counter for search point if found
+            count += 1
+    # 5. return results
     return count
 
 
@@ -141,6 +157,8 @@ def core_workload(my_data_slice):
     # print(f"\n\nmy_data_slice:  {my_data_slice}")
     index_list = my_data_slice.start
     my_data = my_data_slice.stop
+    my_data["index_list"] = index_list
+    # Testing by printing core name
     core =""
     if 0 in index_list:
         core = "Core 1: "
@@ -156,7 +174,7 @@ def core_workload(my_data_slice):
         # iterate through each column in row
         for val in my_data['Matrix'][row]:
             if val == 'o':  # check point is not a mine
-                print(f"{core} (x, y): {x}, {y}")
+                # print(f"{core} (x, y): {x}, {y}")
 
                 search_points = get_search_points(x, y, my_data['NumRows'] - 1, my_data['NumColumns'] - 1)
                 num_mines = count_mines(x, y, search_points, my_data)
@@ -164,5 +182,5 @@ def core_workload(my_data_slice):
                 my_data["Matrix"][y][x] = val
             x += 1  # increment
 
-   # print(f"\n{core}Result data: {my_data}")
+    # print(f"\n{core}Result data: {my_data}")
     return my_data
