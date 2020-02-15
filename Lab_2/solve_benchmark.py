@@ -103,8 +103,8 @@ def core_workload(slice):
     res = []
 
     # 2. We unpack the variables
-    population = slice[0]
-    use_fast_algorithm = slice[1]
+    population = slice(0)
+    use_fast_algorithm = slice(1)
 
     # 3. We assign res
     res = [run_file(person, use_fast_algorithm) for person in population]
@@ -119,7 +119,7 @@ def core_workload(slice):
 def my_map_stage(population_slices):
     # 1. We create the output variable
     res = []
-
+    print(f"pop slices: {population_slices}")
     # 2. We setup the object for enabling parallel computation among the different cores
     pool = multiprocessing.Pool()
 
@@ -188,6 +188,9 @@ def run_benchmark(input_files_dir, use_fast_algorithm, num_cores):
     else:
         # 4.1. We apply our problem-specific divide function:
         population_slices = my_divide_stage(population_files, num_cores, use_fast_algorithm)
+
+        print(f"Divide: Population slices::\n\n")
+        print(population_slices)
 
         # 4.2. We apply our problem-specific map function:
         population_slices_results = my_map_stage(population_slices)
