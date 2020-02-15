@@ -163,8 +163,11 @@ def my_main(input_name, output_name):
 # ---------------------------------------------------------------
 if __name__ == '__main__':
     # 1. Name of input and output files
-    input_name = "input_3.txt"
-    output_name = "output.txt"
+
+    file_num = 3
+
+    input_name = "input_files/input_" + str(file_num) + ".txt"
+    output_name = "results/output_" + str(file_num) + ".txt"
 
     # 2. Main function
     my_main(input_name, output_name)
