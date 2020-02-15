@@ -100,7 +100,7 @@ if __name__ == '__main__':
     # 1. Name of input and output files
 
     file_num = 3     # number of file to test
-    core_count = 2   # number of cores to use
+    core_count = 1   # number of cores to use
 
     input_name = "input_files/input_" + str(file_num) + ".txt"
     output_name = "results/output_" + str(file_num) + ".txt"

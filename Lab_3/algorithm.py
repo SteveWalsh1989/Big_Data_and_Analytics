@@ -8,8 +8,11 @@ import multiprocessing
 def solve(my_data, num_cores):
     """Searches Matrix for mines around each point in data[map] and changes value to number mines found"""
     y = -1  # initialise column
+    solution = {}
     # iterate through each row
     if num_cores == 1:    # Run sequentially
+
+        # we loop over every point in the data matrix
         for index, row in enumerate(my_data["Matrix"]):
             # print(f"Number cores: {num_cores}")
             y += 1
@@ -17,11 +20,22 @@ def solve(my_data, num_cores):
             # iterate through each column in row
             for val in row:
                 if val == 'o':  # check point is not a mine
+
+                    # get list of points to search for bomb around (x,y) from row and column
                     search_points = get_search_points(x, y, my_data['NumRows']-1, my_data['NumColumns']-1)
+
+                    # get the number of mine per search point using the list of search points
                     num_mines = count_mines(x, y, search_points, my_data)
                     val = str(num_mines)
+                    # reset
                     my_data["Matrix"][y][x] = val
                 x += 1  # increment y
+        solution["NumRows"] = my_data['NumRows']
+        row_index = 0
+        while row_index < my_data['NumRows']:
+            solution[row_index] = my_data["Matrix"][row_index]
+            row_index += 1
+
     else:  # Run in parallel using number of cores requested
         num_rows = 0
         # Get number of rows
@@ -105,7 +119,7 @@ def my_reduce_stage(results_slice):
     return res
 
 
-def core_workload(my_data_slice)
+def core_workload(my_data_slice):
     """ Core function - takes data slices and locates bombs for each point within rows """
     # print(f"\n\nmy_data_slice:  {my_data_slice}")
     index_list = my_data_slice.start
