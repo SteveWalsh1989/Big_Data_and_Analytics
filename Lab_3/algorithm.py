@@ -109,7 +109,6 @@ def my_reduce_stage(results_slice):
     # 2. loop over each chunk in results slice
     for chunk in results_slice:
         # print(f"chunk-- {chunk}")
-
         res["NumRows"] = chunk["NumColumns"]  # messed up naming before this
         # 3. loop over array index list
         for index in chunk["index_list"]:

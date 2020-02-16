@@ -97,6 +97,7 @@ def parse_out(output_name, my_solution):
             line = line[0:(size - 1)]
 
         line = line + "\n"
+        line = line
         my_output_stream.write(line)
         row += 1
     my_output_stream.close()
@@ -126,14 +127,9 @@ def my_main(input_name, output_name, num_cores):
 # its execution.
 # ---------------------------------------------------------------
 if __name__ == '__main__':
-    # 1. Name of input and output files
-    cores = [1, 2, 4, 8]
-
-    file_num = 3  # number of file to test
-
-    # generates a file with inputname, numRows, numColumn
-    file_num = generate_file(4, 1000, 1000)
-
+    # file_num = generate_file(4, 3000, 3000)   # generates a file with inputname, numRows, numColumn
+    cores = [1, 2, 4, 8]  # create list of cores to test
+    file_num = 4
     input_name = "input_files/input_" + str(file_num) + ".txt"
     output_name = "results/output_" + str(file_num) + ".txt"
 

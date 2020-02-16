@@ -1,0 +1,91 @@
+Generating Data ...
+input_3
+Rows Requested: 2000
+Cols Requested: 1500
+Generating Data Complete
+
+Solving
+Number cores: 1
+Number rows: 2000
+Number cols: 1500
+Time Taken: 15.049901008605957
+
+Solving
+Number cores: 2
+Number rows: 2000
+Number cols: 1500
+Time Taken: 14.44848895072937
+
+Solving
+Number cores: 4
+Number rows: 2000
+Number cols: 1500
+Time Taken: 11.772229194641113
+
+Solving
+Number cores: 8
+Number rows: 2000
+Number cols: 1500
+Time Taken: 12.317950963973999
+----------------------------------
+----------------------------------
+Generating Data ...
+input_4
+Rows Requested: 3000
+Cols Requested: 3000
+Generating Data Complete
+
+Solving
+Number cores: 1
+Number rows: 3000
+Number cols: 3000
+Time Taken: 39.70793700218201
+
+Solving
+Number cores: 2
+Number rows: 3000
+Number cols: 3000
+Time Taken: 58.4220609664917
+
+Solving
+Number cores: 4
+Number rows: 3000
+Number cols: 3000
+Time Taken: 54.273195028305054
+
+Solving
+Number cores: 8
+Number rows: 3000
+Number cols: 3000
+Time Taken: 37.70068597793579
+----------------------------------
+----------------------------------
+Solving
+Number cores: 1
+Number rows: 3000
+Number cols: 3000
+Time Taken: 30.616111040115356
+
+Solving
+Number cores: 2
+Number rows: 3000
+Number cols: 3000
+Time Taken: 32.857216119766235
+
+Solving
+Number cores: 4
+Number rows: 3000
+Number cols: 3000
+Time Taken: 34.878583908081055
+
+Solving
+Number cores: 8
+Number rows: 3000
+Number cols: 3000
+Time Taken: 36.56701993942261
+
+Solving
+Number cores: 10
+Number rows: 3000
+Number cols: 3000
+Time Taken: 37.13658690452576
