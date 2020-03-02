@@ -15,6 +15,7 @@
 import sys
 import codecs
 
+
 #---------------------------------------
 #  FUNCTION get_key_value
 #---------------------------------------
@@ -41,6 +42,7 @@ def get_key_value(line):
     # 5. We return res
     return res
 
+
 # ------------------------------------------
 # FUNCTION my_reduce
 #
@@ -55,7 +57,11 @@ def get_key_value(line):
 #k
 # ------------------------------------------
 def my_reduce(my_input_stream, my_output_stream, my_reducer_input_parameters):
-    pass
+    print(f"my_reduce: reducing...")
+
+
+
+    # print(f"my_map: mapping complete")
 
 # ------------------------------------------
 # FUNCTION my_main
@@ -81,7 +87,7 @@ def my_main(local_False_Cloudera_True,
         my_output_stream = sys.stdout
 
     # 2. We trigger my_reducer
-    my_reducer(my_input_stream, my_output_stream, my_reducer_input_parameters)
+    my_reduce(my_input_stream, my_output_stream, my_reducer_input_parameters)
 
 # ---------------------------------------------------------------
 #           PYTHON EXECUTION

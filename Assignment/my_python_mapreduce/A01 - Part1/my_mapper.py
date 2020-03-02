@@ -29,11 +29,12 @@ def process_line(line):
     params = line.split(";")
 
     # 4. We assign res
-    if (len(params) == 7):
+    if len(params) == 7:
         res = tuple(params)
 
     # 5. We return res
     return res
+
 
 # ------------------------------------------
 # FUNCTION my_map
@@ -60,6 +61,7 @@ def my_map(my_input_stream, my_output_stream, my_mapper_input_parameters):
             else:
                 res[location[1]] = 1                 # initialise station in result list and set value to one
 
+    # write results to result file
     for key in res:                                  # res - format each key in dict
         format = "(" + key + ", " + str(res[key]) + ")\n"
         my_output_stream.write(format)               # write output to output file line by line
@@ -79,7 +81,7 @@ def my_main(local_False_Cloudera_True,
     my_output_stream = None
 
     # 1.1: Local Mode --> We use the debug files
-    if (local_False_Cloudera_True == False):
+    if local_False_Cloudera_True == False:
         my_input_stream = codecs.open(input_file_example, "r", encoding='utf-8')
         my_output_stream = codecs.open(output_file_example, "w", encoding='utf-8')
 
@@ -90,6 +92,7 @@ def my_main(local_False_Cloudera_True,
 
     # 2. We trigger my_map
     my_map(my_input_stream, my_output_stream, my_mapper_input_parameters)
+
 
 # ---------------------------------------------------------------
 #           PYTHON EXECUTION

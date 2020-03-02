@@ -128,9 +128,9 @@ def my_sort_simulation(output_directory):
 
         # 3.2. We read the file content
         for line in my_input_stream:
-            line = line.replace('\n', '')
-            words = line.split('\t')
-            content.append( (words[0], words[1]) )
+            print(f"line: {line}")
+            station = line.split(',')
+            content.append((station[0], station[1]))
 
         # 3.3. We close the file
         my_input_stream.close()
@@ -156,6 +156,7 @@ def my_sort_simulation(output_directory):
         populate_reducer_input_file(content, ub_index+1, size-1, "sort_2.txt")
     else:
         populate_reducer_input_file(content, 0, size-1, "sort_1.txt")
+
 
 # ------------------------------------------
 # FUNCTION my_reducer_simulation
@@ -187,6 +188,7 @@ def my_reducer_simulation(output_directory, my_reducer_input_parameters):
         # 3.4. We close the files
         my_input_stream.close()
         my_output_stream.close()
+
 
 # ------------------------------------------
 # FUNCTION my_main
@@ -221,6 +223,8 @@ def my_main(input_directory,
 # Python program, making the Python interpreter to trigger
 # its execution.
 # ---------------------------------------------------------------
+
+
 if __name__ == '__main__':
     # 1. Local or HDFS folders
     input_directory = "../../my_dataset/"
