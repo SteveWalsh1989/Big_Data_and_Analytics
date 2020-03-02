@@ -39,13 +39,6 @@ def process_line(line):
 # ------------------------------------------
 # FUNCTION my_map
 #
-# TODO: WE NEED TO POPULATE THIS FUNCTION - we wont be sorting in this assignment :D
-# Data from input stream :
-#
-#
-#
-# Example below is for the word counter example
-# good to add functions for like cleaning data and such
 # ------------------------------------------
 def my_map(my_input_stream, my_output_stream, my_mapper_input_parameters):
     # create output variable dict
@@ -63,7 +56,7 @@ def my_map(my_input_stream, my_output_stream, my_mapper_input_parameters):
 
     # write results to result file
     for key in res:                                  # res - format each key in dict
-        format = "(" + key + ", " + str(res[key]) + ")\n"
+        format = key + ", " + "(" + str(res[key]) + ")\n"
         my_output_stream.write(format)               # write output to output file line by line
 
 

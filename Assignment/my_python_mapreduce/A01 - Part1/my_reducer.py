@@ -50,8 +50,8 @@ def get_key_value(line):
 #
 # 1. read line by line
 # word either can be the same as the last word or a new word
-#   if the same -->  same word --> add amount to current word amount
-#   if different -->  new word --> print amount for current word + set up count for new word with its amount
+#   if the same -->  same station --> add amount to current station
+#   if different -->  new station --> print amount for current station + set up count for new station with its amount
 #
 # for the last line in the file then -> as there is no previous that you can check, you just print the last one so need to account for this
 #k
