@@ -129,7 +129,7 @@ def my_sort_simulation(output_directory):
         # 3.2. We read the file content
         for line in my_input_stream:
             # print(f"line: {line}")
-            station = line.split(',')
+            station = line.split(' - ')
             content.append((station[0], station[1]))
 
         # 3.3. We close the file

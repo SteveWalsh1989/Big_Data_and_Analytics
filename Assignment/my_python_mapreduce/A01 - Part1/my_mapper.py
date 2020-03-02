@@ -56,7 +56,7 @@ def my_map(my_input_stream, my_output_stream, my_mapper_input_parameters):
 
     # write results to result file
     for key in res:                                  # res - format each key in dict
-        format = key + ", " + "(" + str(res[key]) + ")\n"
+        format = key + " - " + str(res[key]) + "\n"
         my_output_stream.write(format)               # write output to output file line by line
 
 

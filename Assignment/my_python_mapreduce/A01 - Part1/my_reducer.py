@@ -57,11 +57,24 @@ def get_key_value(line):
 #k
 # ------------------------------------------
 def my_reduce(my_input_stream, my_output_stream, my_reducer_input_parameters):
-    print(f"my_reduce: reducing...")
+    station = ""
+    times_empty = 0
 
-
-
-    # print(f"my_map: mapping complete")
+    for line in my_input_stream:                    # iterate through input
+        location = line.split("\t")                 # split station name and bike avail value
+        if station == "":                           # check for initial station
+            station = location[0]                   # set station name
+        # print(f"my_reduce: line - {line}")
+        if len(location) > 1:                       # ignore blank lines
+            location[1] = location[1].rstrip()      # remove newline char
+            if location[0] == station:              # if station hasn't changed
+                times_empty = times_empty + int(location[1])     # increment number of times without bike by station value
+            else:                                   # if new station
+                format = station + " - " + str(times_empty) + "\n"    # format results
+                my_output_stream.write(format)      # write result to output file
+                station = location[0]               # reset values for new station
+                times_empty = int(location[1].rstrip())
+        # print(f"my_map: mapping complete")
 
 # ------------------------------------------
 # FUNCTION my_main
