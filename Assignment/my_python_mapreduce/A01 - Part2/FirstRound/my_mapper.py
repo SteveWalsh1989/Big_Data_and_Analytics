@@ -49,8 +49,8 @@ def my_map(my_input_stream, my_output_stream, my_mapper_input_parameters):
             total += 1
 
 
-    format = "total" + "(" + str(total) + ")\n"
-    print(f"{format}")
+    format = "total" + "\t(" + str(total) + ")\n"
+    # print(f"{format}")
     my_output_stream.write(format)
 
 

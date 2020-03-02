@@ -41,11 +41,17 @@ def get_key_value(line):
     # 5. We return res
     return res
 
+
 # ------------------------------------------
 # FUNCTION my_reduce
 # ------------------------------------------
 def my_reduce(my_input_stream, my_output_stream, my_reducer_input_parameters):
-    pass
+    #  for line in my_input_stream:  # iterate through input
+    print(f"my_reduce - here")
+    total = 0
+    # for line in my_input_stream:  # iterate through input
+    #     # print(f"{line}")
+
 
 # ------------------------------------------
 # FUNCTION my_main

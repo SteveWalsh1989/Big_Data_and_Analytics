@@ -60,6 +60,7 @@ def my_map(my_input_stream, my_output_stream, my_mapper_input_parameters):
         my_output_stream.write(format)               # write output to output file line by line
 
 
+
 # ------------------------------------------
 # FUNCTION my_main
 # ------------------------------------------

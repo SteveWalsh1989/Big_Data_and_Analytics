@@ -128,6 +128,7 @@ def my_sort_simulation(output_directory):
 
         # 3.2. We read the file content
         for line in my_input_stream:
+
             line = line.replace('\n', '')
             words = line.split('\t')
             content.append( (words[0], words[1]) )
