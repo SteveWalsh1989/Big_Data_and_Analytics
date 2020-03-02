@@ -35,11 +35,25 @@ def process_line(line):
     # 5. We return res
     return res
 
+
 # ------------------------------------------
 # FUNCTION my_map
 # ------------------------------------------
 def my_map(my_input_stream, my_output_stream, my_mapper_input_parameters):
-    pass
+    total = 0
+    # Loop over input file
+    for line in my_input_stream:
+        location = line.split(";")
+
+        if location[1] == "Fitzgerald's Park" and int(location[0]) == 0 and int(location[5]) == 0:   # checks station name, status and that there are no bikes left
+            total += 1
+
+
+    format = "total" + "(" + str(total) + ")\n"
+    print(f"{format}")
+    my_output_stream.write(format)
+
+
 
 # ------------------------------------------
 # FUNCTION my_main
