@@ -15,9 +15,6 @@
 import os
 import codecs
 
-stations = []
-cols = []
-
 
 # ------------------------------------------
 # FUNCTION reduce_cols
@@ -58,7 +55,7 @@ def check_station(line):
     res = False
 
     # 2. We check if name is in stations list
-    for name in stations:
+    for name in station_names:
         if line[0] == name:
             res = True
 
@@ -210,8 +207,7 @@ def my_main(my_list, station_names):
 
     # 4. Apply the Higher-Order function my_filter again,
     #    now to restrict the entries to the ones of the desired stations
-    global stations
-    stations = station_names
+
     my_list = my_filter(check_station, my_list)
 
     print("\n\n\n\n\n------ STEP 4 ------\n")
@@ -234,7 +230,7 @@ def my_main(my_list, station_names):
     # 6. Apply the the Higher-Order function my_fold provided above,
     #    so as to compute the total amount of ran outs
 
-    res = None # TODO  -> Replace None with a call to my_fold
+    res = my_fold(lambda x, y: 1, 0, my_list)
 
     print("\n\n\n\n\n------ STEP 6 ------\n")
     print(res)
@@ -247,6 +243,7 @@ def my_main(my_list, station_names):
 # its execution.
 # ---------------------------------------------------------------
 if __name__ == '__main__':
+    global station_names
     # 1. Local or HDFS folders
     input_file_name = "../../my_dataset/bikeMon_20170317.csv"
     output_file_name = "../../my_result/A01 - Part4/result.txt"
