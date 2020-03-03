@@ -41,16 +41,14 @@ def process_line(line):
 # ------------------------------------------
 def my_map(my_input_stream, my_output_stream, my_mapper_input_parameters):
     total = 0
-    # Loop over input file
-    for line in my_input_stream:
-        location = line.split(";")
+    for line in my_input_stream:     # Loop over input file
+        location = line.split(";")   # split location row into columns as elements in list
 
-        if location[1] == "Fitzgerald's Park" and int(location[0]) == 0 and int(location[5]) == 0:   # checks station name, status and that there are no bikes left
+        if location[1] == my_mapper_input_parameters[0] and int(location[0]) == 0 and int(location[5]) == 0:   # checks station name, status and that there are no bikes left
             total += 1
 
-    format = "total" + "\t(" + str(total) + ")\n"
-    # print(f"{format}")
-    my_output_stream.write(format)
+    format = "total" + "\t(" + str(total) + ")\n"   # format output
+    my_output_stream.write(format)                  # write output
 
 
 
