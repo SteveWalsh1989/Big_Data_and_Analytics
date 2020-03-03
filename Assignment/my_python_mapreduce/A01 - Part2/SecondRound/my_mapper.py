@@ -101,7 +101,6 @@ def my_main(local_False_Cloudera_True, my_mapper_input_parameters, input_file_ex
     # 2. We trigger my_map
     my_map(my_input_stream, my_output_stream, my_mapper_input_parameters)
 
-
 # ---------------------------------------------------------------
 #           PYTHON EXECUTION
 # This is the main entry point to the execution of our program.

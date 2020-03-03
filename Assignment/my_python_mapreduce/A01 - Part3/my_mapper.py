@@ -14,7 +14,7 @@
 
 import sys
 import codecs
-
+import datetime
 # ------------------------------------------
 # FUNCTION process_line
 # ------------------------------------------
@@ -35,11 +35,21 @@ def process_line(line):
     # 5. We return res
     return res
 
+
 # ------------------------------------------
 # FUNCTION my_map
 # ------------------------------------------
 def my_map(my_input_stream, my_output_stream, my_mapper_input_parameters):
-    pass
+
+    for line in my_input_stream:  # Loop over input file
+        location = line.split(";")  # split location row into columns as elements in list
+        if location[1] == my_mapper_input_parameters[0] and int(location[0]) == 0 and int(location[5]) == 0:  # checks station name, status and that there are no bikes left
+            date = datetime.datetime.strptime(location[4], '%d-%m-%Y %H:%M:%S')  # convert string to date time object
+            # print(f"date: {date.date()}  | Time: {date.time()}" )
+            date_str = date.date().strftime("%d-%m-%Y")
+            time_str = date.time().strftime("%H:%M:%S")
+            format = date_str + "\t(" + time_str + ")\n"  # format output
+            my_output_stream.write(format)  # write output
 
 # ------------------------------------------
 # FUNCTION my_main
