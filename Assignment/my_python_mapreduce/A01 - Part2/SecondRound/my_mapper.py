@@ -14,6 +14,7 @@
 
 import sys
 import codecs
+from datetime import datetime
 
 import calendar
 import datetime
@@ -23,6 +24,9 @@ import datetime
 # ------------------------------------------
 # Examples: get_day_of_week("06-02-2017") --> "Monday"
 #           get_day_of_week("07-02-2017") --> "Tuesday"
+
+
+weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']  # store weekdays
 
 def get_day_of_week(date):
     # 1. We create the output variable
@@ -55,7 +59,14 @@ def process_line(line):
 # FUNCTION my_map
 # ------------------------------------------
 def my_map(my_input_stream, my_output_stream, my_mapper_input_parameters):
-    pass
+    count = 0  # number times ran out of bikes
+    hour = 0   # current hour that we're checking
+    for line in my_input_stream:  # Loop over input file
+        location = line.split(";")  # split location row into columns as elements in list
+        if location[1] == my_mapper_input_parameters[0] and int(location[0]) == 0 and int(location[5]) == 0:  # checks station name, status and that there are no bikes left
+            date = datetime.datetime.strptime(location[4], '%d-%m-%Y %H:%M:%S')  # convert string to date time object
+            print(f"date: {date} -  {weekdays[date.weekday()]} - {date.hour}")
+
 
 # ------------------------------------------
 # FUNCTION my_main

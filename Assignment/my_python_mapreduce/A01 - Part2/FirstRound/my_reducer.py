@@ -52,9 +52,9 @@ def my_reduce(my_input_stream, my_output_stream, my_reducer_input_parameters):
         val = value[1].replace("(", "").replace(")", "")  # clean int
         total += int(val)                                 # add  to total
 
-
     format = "total" + "\t(" + str(total) + ")\n"    # format result
-    my_output_stream.write(format)                 # write result to output stream
+    my_output_stream.write(format)                   # write result to output stream
+
 
 # ------------------------------------------
 # FUNCTION my_main
@@ -81,6 +81,7 @@ def my_main(local_False_Cloudera_True,
 
     # 2. We trigger my_reducer
     my_reduce(my_input_stream, my_output_stream, my_reducer_input_parameters)
+
 
 # ---------------------------------------------------------------
 #           PYTHON EXECUTION
