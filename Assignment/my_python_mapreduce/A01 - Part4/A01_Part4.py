@@ -34,14 +34,12 @@ def reduce_cols(line):
 # ------------------------------------------
 # FUNCTION find_empty_station
 # ------------------------------------------
-def find_empty_station(my_list):
+def find_empty_station(line):
     # 1. We create the output variable
     res = []
-
     # 2. We populate the list with stations that have no bikes available
-    for line in my_list:
-        if line[1] == 0:                    # check if there are bikes available
-            res.append([line[0], line[1]])  # add to result
+    if line[1] == 0:                    # check if there are bikes available
+        res.append([line[0], line[1]])  # add to result
 
     # 3. We return res
     return res
@@ -50,7 +48,7 @@ def find_empty_station(my_list):
 # ------------------------------------------
 # FUNCTION check_station
 # ------------------------------------------
-def check_station(line):
+def check_station_name(line):
     # 1. We create the output variable
     res = False
 
@@ -197,7 +195,7 @@ def my_main(my_list, station_names):
     # 3. Apply the Higher-Order function my_filter provided above,
     #    now to restrict only the entries which are ran out of bikes
 
-    my_list = find_empty_station(my_list)
+    my_list = my_filter(find_empty_station, my_list)
 
     print("\n\n\n\n\n------ STEP 3 ------\n")
     for item in range(50):
@@ -208,7 +206,7 @@ def my_main(my_list, station_names):
     # 4. Apply the Higher-Order function my_filter again,
     #    now to restrict the entries to the ones of the desired stations
 
-    my_list = my_filter(check_station, my_list)
+    my_list = my_filter(check_station_name, my_list)
 
     print("\n\n\n\n\n------ STEP 4 ------\n")
     for item in range(50):
