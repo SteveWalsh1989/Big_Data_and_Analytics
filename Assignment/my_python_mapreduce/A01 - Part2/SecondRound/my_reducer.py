@@ -47,15 +47,26 @@ def get_key_value(line):
 # ------------------------------------------
 def my_reduce(my_input_stream, my_output_stream, my_reducer_input_parameters):
 
-    for line in my_input_stream:
-        value = line.split("\t")
-        day = value[0]
-        count = value[1]
+    day = ""
+    count = 0
+    total = my_reducer_input_parameters[0]
 
-        print(f"day - {day} : count {count}")
+    for line in my_input_stream:            # iterate through input stream
+        value = line.split("\t")            # split date into list
+        count_val = int(value[1].replace("(", "").replace(")", ""))   # clean count value from data
+        if day == "":                       # if first record
+            day = value[0]                  # initialise day with date
 
+        if day == value[0]:                 # if same day
 
+            count += count_val              # increment count
+        else:                               # if new day
+            avg = count/total               # calc average
+            format = day + "\t(" + str(count) + ", " + str(avg) + ")\n"  # format output
+            my_output_stream.write(format)  # write output
 
+            day = value[0]                  # set new date val
+            count = count_val               # reset count
 
 
 # ------------------------------------------
