@@ -14,7 +14,7 @@
 
 import sys
 import codecs
-
+import datetime
 #---------------------------------------
 #  FUNCTION get_key_value
 #---------------------------------------
@@ -40,11 +40,42 @@ def get_key_value(line):
     # 5. We return res
     return res
 
+
 # ------------------------------------------
 # FUNCTION my_reduce
 # ------------------------------------------
 def my_reduce(my_input_stream, my_output_stream, my_reducer_input_parameters):
-    pass
+    # my_reducer_input_parameters[0] = 5
+    count = 0
+    date = ""
+    times = []
+    for line in my_input_stream:                                                 # Loop over input file
+        time_delta = datetime.timedelta(minutes=my_reducer_input_parameters[0])  # set time delta based on input params
+        date_time = line.split("\t")                                             # split date into list
+        date_time[1] = date_time[1].rstrip()                                     # remove newline
+        date_time[1] = date_time[1].replace("(", "").replace(")", "")            # remove brackets
+        date_time_str = date_time[0] + " " + date_time[1]                        # create date time string from input
+        current_date = datetime.datetime.strptime(date_time_str, '%d-%m-%Y %H:%M:%S')  # convert date time string to datetime
+        if date == "":
+            date = current_date         # initialise date
+        if len(times) == 0:
+            times.append(current_date)  # add time to list
+            count = 1
+        else:
+            # check its the same day and within 5 minute increment
+            dt = times[len(times) - 1] + time_delta
+            if date.date() == current_date.date() and current_date.time() == dt.time():
+                count += 1     # increment count
+                times.append(dt) # add current time to times[]
+            else:
+                # format current count and time from start of station being empty to string
+                date_str = current_date.date().strftime("%d-%m-%Y")  # extract date as string
+                time_str = times[0].strftime("%H:%M:%S")             # extract time as string
+                format = date_str + "\t(" + time_str + ", " + str(count) + ")\n"
+                my_output_stream.write(format)  # write output
+                count = 0   # reset value
+                times = []  # reset value
+
 
 # ------------------------------------------
 # FUNCTION my_main
