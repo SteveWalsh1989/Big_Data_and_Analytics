@@ -46,12 +46,15 @@ def get_key_value(line):
 # FUNCTION my_reduce
 # ------------------------------------------
 def my_reduce(my_input_stream, my_output_stream, my_reducer_input_parameters):
-    #  for line in my_input_stream:  # iterate through input
-    print(f"my_reduce - here")
-    total = 0
-    # for line in my_input_stream:  # iterate through input
-    #     # print(f"{line}")
+    total = 0                                             # initialise total
+    for line in my_input_stream:                          # iterate through input
+        value = line.split("\t")                          # split total to get value
+        val = value[1].replace("(", "").replace(")", "")  # clean int
+        total += int(val)                                 # add  to total
 
+
+    format = "total" + "\t(" + str(total) + ")\n"    # format result
+    my_output_stream.write(format)                 # write result to output stream
 
 # ------------------------------------------
 # FUNCTION my_main
