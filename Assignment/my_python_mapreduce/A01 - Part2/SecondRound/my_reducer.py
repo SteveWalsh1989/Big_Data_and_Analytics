@@ -41,11 +41,22 @@ def get_key_value(line):
     # 5. We return res
     return res
 
+
 # ------------------------------------------
 # FUNCTION my_reduce
 # ------------------------------------------
 def my_reduce(my_input_stream, my_output_stream, my_reducer_input_parameters):
-    pass
+
+    for line in my_input_stream:
+        value = line.split("\t")
+        day = value[0]
+        count = value[1]
+
+        print(f"day - {day} : count {count}")
+
+
+
+
 
 # ------------------------------------------
 # FUNCTION my_main

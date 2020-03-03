@@ -55,6 +55,7 @@ def process_line(line):
     # 5. We return res
     return res
 
+
 # ------------------------------------------
 # FUNCTION my_map
 # ------------------------------------------
@@ -65,36 +66,30 @@ def my_map(my_input_stream, my_output_stream, my_mapper_input_parameters):
         location = line.split(";")  # split location row into columns as elements in list
         if location[1] == my_mapper_input_parameters[0] and int(location[0]) == 0 and int(location[5]) == 0:  # checks station name, status and that there are no bikes left
             date = datetime.datetime.strptime(location[4], '%d-%m-%Y %H:%M:%S')  # convert string to date time object
-            print(f"date: {date} -  {weekdays[date.weekday()]} - {date.hour}")
-            if hour == 0:
-                hour = date.hour  # initialise hour
 
-            if hour == date.hour:  # check that its the same hour
-                count += 1
-            else:
+            if hour == 0:          # if this is the first record being read
+                hour = date.hour   # initialise hour
+
+            if hour == date.hour:  # If current line is the same hour as previously read
+                count += 1         # increment count
+            else:                  # If current line is for a new hour
                 # print current day and hour counts to output
                 format = weekdays[date.weekday()] + "_"+ str(hour) + "\t(" + str(count) + ")\n"  # format output
                 my_output_stream.write(format)  # write output
-
                 hour = date.hour   # set hour to the new hour value
-
 
 
 # ------------------------------------------
 # FUNCTION my_main
 # ------------------------------------------
-def my_main(local_False_Cloudera_True,
-            my_mapper_input_parameters,
-            input_file_example,
-            output_file_example
-           ):
+def my_main(local_False_Cloudera_True, my_mapper_input_parameters, input_file_example, output_file_example):
 
     # 1. We select the input and output streams based on our working mode
     my_input_stream = None
     my_output_stream = None
 
     # 1.1: Local Mode --> We use the debug files
-    if (local_False_Cloudera_True == False):
+    if not local_False_Cloudera_True:
         my_input_stream = codecs.open(input_file_example, "r", encoding='utf-8')
         my_output_stream = codecs.open(output_file_example, "w", encoding='utf-8')
 
@@ -105,6 +100,7 @@ def my_main(local_False_Cloudera_True,
 
     # 2. We trigger my_map
     my_map(my_input_stream, my_output_stream, my_mapper_input_parameters)
+
 
 # ---------------------------------------------------------------
 #           PYTHON EXECUTION
