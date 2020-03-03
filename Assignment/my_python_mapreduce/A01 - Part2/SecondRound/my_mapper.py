@@ -66,6 +66,18 @@ def my_map(my_input_stream, my_output_stream, my_mapper_input_parameters):
         if location[1] == my_mapper_input_parameters[0] and int(location[0]) == 0 and int(location[5]) == 0:  # checks station name, status and that there are no bikes left
             date = datetime.datetime.strptime(location[4], '%d-%m-%Y %H:%M:%S')  # convert string to date time object
             print(f"date: {date} -  {weekdays[date.weekday()]} - {date.hour}")
+            if hour == 0:
+                hour = date.hour  # initialise hour
+
+            if hour == date.hour:  # check that its the same hour
+                count += 1
+            else:
+                # print current day and hour counts to output
+                format = weekdays[date.weekday()] + "_"+ str(hour) + "\t(" + str(count) + ")\n"  # format output
+                my_output_stream.write(format)  # write output
+
+                hour = date.hour   # set hour to the new hour value
+
 
 
 # ------------------------------------------
