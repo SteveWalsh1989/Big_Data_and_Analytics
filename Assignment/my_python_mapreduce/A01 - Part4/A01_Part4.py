@@ -16,19 +16,19 @@ import os
 import codecs
 
 stations = []
+cols = []
+
+
 # ------------------------------------------
-# FUNCTION my_reduce
+# FUNCTION reduce_cols
 # ------------------------------------------
-def my_reduce(my_list, cols):
+def reduce_cols(line):
     # 1. We create the output variable
     res = []
 
     # 2. We populate the list using columns passed in
-    for i, line in enumerate(my_list):
-        temp = []                          # initialise temp list
-        for val in cols:                   # iterate through passed in cols
-            temp.append(my_list[i][val])   # add to temp list
-        res.insert(i, temp)                # add temp list to result
+    for val in cols:                   # iterate through passed in cols
+        res.append(line[val])   # add to temp list
 
     # 3. We return res
     return res
@@ -62,7 +62,7 @@ def check_station(line):
         if line[0] == name:
             res = True
 
-    #3. We return res
+    # 3. We return res
     return res
 
 
@@ -172,8 +172,7 @@ def process_line(line):
 # FUNCTION my_main
 # ------------------------------------------
 def my_main(my_list, station_names):
-    global stations
-    stations= station_names
+
     # --------------- STEP 1 ------------------------#
 
     # 1. Apply the Higher-Order function my_map provided above,
@@ -188,8 +187,9 @@ def my_main(my_list, station_names):
     # --------------- STEP 2 ------------------------#
     # 2. Apply the Higher-Order function my_map again,
     #    now to restrict the tuple previously computed to just the name of the station and the amount of bikes available
-
-    my_list = my_reduce(my_list, [1, 5])  #
+    global cols
+    cols = [1, 5]
+    my_list = my_map(reduce_cols, my_list)  #
 
     print("\n\n\n\n\n------ STEP 2 ------\n")
     for item in range(50):
@@ -210,7 +210,8 @@ def my_main(my_list, station_names):
 
     # 4. Apply the Higher-Order function my_filter again,
     #    now to restrict the entries to the ones of the desired stations
-
+    global stations
+    stations = station_names
     my_list = my_filter(check_station, my_list)
 
     print("\n\n\n\n\n------ STEP 4 ------\n")
