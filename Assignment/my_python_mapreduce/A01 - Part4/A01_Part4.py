@@ -15,6 +15,41 @@
 import os
 import codecs
 
+
+# ------------------------------------------
+# FUNCTION my_reduce
+# ------------------------------------------
+def my_reduce(my_list, cols):
+    # 1. We create the output variable
+    res = []
+
+    # 2. We populate the list using columns passed in
+    for i, line in enumerate(my_list):
+        temp = []                          # initialise temp list
+        for val in cols:                   # iterate through passed in cols
+            temp.append(my_list[i][val])   # add to temp list
+        res.insert(i, temp)                # add temp list to result
+
+    # 3. We return res
+    return res
+
+
+# ------------------------------------------
+# FUNCTION find_empty_station
+# ------------------------------------------
+def find_empty_station(my_list):
+    # 1. We create the output variable
+    res = []
+
+    # 2. We populate the list with stations that have no bikes available
+    for line in my_list:
+        if line[1] == 0:                    # check if there are bikes available
+            res.append([line[0], line[1]])  # add to result
+
+    # 3. We return res
+    return res
+
+
 # ------------------------------------------
 #
 # HIGHER ORDER FUNCTIONS
@@ -36,6 +71,7 @@ def my_map(funct, my_list):
     # 3. We return res
     return res
 
+
 # ------------------------------------------
 # FUNCTION my_filter
 # ------------------------------------------
@@ -46,11 +82,12 @@ def my_filter(funct, my_list):
     # 2. We populate the list with the higher application
     for item in my_list:
         # 2.1. If an item satisfies the function, then it passes the filter
-        if funct(item) == True:
+        if funct(item):
             res.append(item)
 
     # 3. We return res
     return res
+
 
 # ------------------------------------------
 # FUNCTION my_fold
@@ -72,6 +109,7 @@ def my_fold(funct, accum, my_list):
 #
 # ------------------------------------------
 
+
 # ------------------------------------------
 # FUNCTION process_line
 # ------------------------------------------
@@ -86,7 +124,7 @@ def process_line(line):
     params = line.split(";")
 
     # 4. We assign res
-    if (len(params) == 7):
+    if len(params) == 7:
         res = ( int(params[0]), params[1], float(params[2]), float(params[3]), params[4], int(params[5]), int(params[6]) )
 
     # 5. We return res
@@ -99,7 +137,6 @@ def process_line(line):
 # ------------------------------------------
 
 
-
 # ------------------------------------------
 # FUNCTION my_main
 # ------------------------------------------
@@ -110,18 +147,17 @@ def my_main(my_list, station_names):
     # 1. Apply the Higher-Order function my_map provided above,
     #    so as to apply "process_line" to all functions
 
-    my_list = None # -> Replace None with a call to my_map
+    my_list = my_map(process_line, my_list)  #
 
     print("\n\n\n\n\n------ STEP 1 ------\n")
     for item in range(50):
         print(my_list[item])
 
     # --------------- STEP 2 ------------------------#
-
     # 2. Apply the Higher-Order function my_map again,
     #    now to restrict the tuple previously computed to just the name of the station and the amount of bikes available
 
-    my_list = None # -> Replace None with a call to my_map
+    my_list = my_reduce(my_list, [1, 5])  #
 
     print("\n\n\n\n\n------ STEP 2 ------\n")
     for item in range(50):
@@ -132,7 +168,7 @@ def my_main(my_list, station_names):
     # 3. Apply the Higher-Order function my_filter provided above,
     #    now to restrict only the entries which are ran out of bikes
 
-    my_list = None # -> Replace None with a call to my_filter
+    my_list = find_empty_station(my_list) # TODO  -> Replace None with a call to my_filter
 
     print("\n\n\n\n\n------ STEP 3 ------\n")
     for item in range(50):
@@ -143,7 +179,7 @@ def my_main(my_list, station_names):
     # 4. Apply the Higher-Order function my_filter again,
     #    now to restrict the entries to the ones of the desired stations
 
-    my_list = None # -> Replace None with a call to my_filter
+    my_list = None # TODO  -> Replace None with a call to my_filter
 
     print("\n\n\n\n\n------ STEP 4 ------\n")
     for item in range(50):
@@ -154,7 +190,7 @@ def my_main(my_list, station_names):
     # 5. Apply the the Higher-Order function my_map again,
     #    now to make each entry to be (Station_name, 1)
 
-    my_list = None # -> Replace None with a call to my_map
+    my_list = None  # TODO  -> Replace None with a call to my_map
 
     print("\n\n\n\n\n------ STEP 5 ------\n")
     for item in range(50):
@@ -165,7 +201,7 @@ def my_main(my_list, station_names):
     # 6. Apply the the Higher-Order function my_fold provided above,
     #    so as to compute the total amount of ran outs
 
-    res = None # -> Replace None with a call to my_fold
+    res = None # TODO  -> Replace None with a call to my_fold
 
     print("\n\n\n\n\n------ STEP 6 ------\n")
     print(res)
