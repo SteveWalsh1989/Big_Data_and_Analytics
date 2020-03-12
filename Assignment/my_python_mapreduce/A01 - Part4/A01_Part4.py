@@ -233,6 +233,7 @@ def my_main(my_list, station_names):
     print("\n\n\n\n\n------ STEP 6 ------\n")
     print(res)
 
+
 # ---------------------------------------------------------------
 #           PYTHON EXECUTION
 # This is the main entry point to the execution of our program.
