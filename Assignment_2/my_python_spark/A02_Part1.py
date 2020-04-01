@@ -69,7 +69,7 @@ def filter_by_NoBikesAvailable(x):
 #
 # ------------------------------------------
 def remove_data(x):
-    return [x[1], 1]
+    return (x[1], 1)
 
 
 # ------------------------------------------
@@ -92,10 +92,10 @@ def my_main(sc, my_dataset_dir):
     stationWithCountRDD = filteredStationsCleanedRDD.reduceByKey(lambda x, y: x + y)
 
     # order by decreasing number of times station ran out of bikes
-    #     sortedRDD = stationWithCountRDD.sortBy(sortBy(_._2))
+    sortedRDD = stationWithCountRDD.sortBy(lambda x: (-1) * x[1])
 
     # testing - print results
-    resVal = stationWithCountRDD.collect()
+    resVal = sortedRDD.collect()
     for item in resVal:
         print(item)
 
