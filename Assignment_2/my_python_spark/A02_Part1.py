@@ -44,35 +44,6 @@ def process_line(line):
 
 
 # ------------------------------------------
-# FUNCTION my_filter_function
-#
-# Filters stations by stations that ran out of bikes
-#
-# ------------------------------------------
-def filter_by_NoBikesAvailable(x):
-    # 1. We create the output variable
-    res = False
-
-    # 2. We apply the filtering function
-    # x[5] = noBikesAvailable
-    if (x[5] == "0"):
-        res = True
-
-    # 3. We return res
-    return res
-
-
-# ------------------------------------------
-# FUNCTION remove_data
-#
-# Returns only the station name and a value of 1
-#
-# ------------------------------------------
-def remove_data(x):
-    return (x[1], 1)
-
-
-# ------------------------------------------
 # FUNCTION my_main
 # ------------------------------------------
 def my_main(sc, my_dataset_dir):
@@ -83,15 +54,15 @@ def my_main(sc, my_dataset_dir):
     allStationDataRDD = inputRDD.map(process_line)
 
     # filter data to only have stations that ran out of bikes
-    filteredStationsRDD = allStationDataRDD.filter(filter_by_NoBikesAvailable)
+    filteredStationsRDD = allStationDataRDD.filter(lambda x: x[0] == "0" and x[5] == "0")
 
-    # transform rdd into (station name, )
-    filteredStationsCleanedRDD = filteredStationsRDD.map(remove_data)
+    # transform rdd into (station name, 1)
+    filteredStationsCleanedRDD = filteredStationsRDD.map(lambda x: (x[1], 1))
 
-    # reduce by key
+    # reduce by key  into ( station name, numRanOuts)
     stationWithCountRDD = filteredStationsCleanedRDD.reduceByKey(lambda x, y: x + y)
 
-    # order by decreasing number of times station ran out of bikes
+    # Order by decreasing number of times station ran out of bikes
     sortedRDD = stationWithCountRDD.sortBy(lambda x: (-1) * x[1])
 
     # testing - print results
